@@ -8,6 +8,7 @@
   </head>
   <body>
     <main class="app-shell">
+      <!-- Pantry panel: users build the current ingredient list before asking for recipes. -->
       <section class="pantry-panel" aria-labelledby="pantry-title">
         <div>
           <p class="eyebrow">Kitchen inventory</p>
@@ -25,6 +26,7 @@
               autocomplete="off"
               aria-describedby="ingredient-help"
             >
+            <!-- Filled by static/app.js after querying /api/ingredients. -->
             <ul id="suggestions" class="suggestions" aria-label="Ingredient suggestions"></ul>
           </div>
           <p id="ingredient-help" class="field-help">Type any ingredient. New ingredients are saved to the catalog.</p>
@@ -40,6 +42,7 @@
           </div>
         </form>
 
+        <!-- This inventory is browser session state; the backend receives it on Finish. -->
         <section class="inventory" aria-labelledby="inventory-title">
           <div class="section-heading">
             <h2 id="inventory-title">Your ingredients</h2>
@@ -50,6 +53,7 @@
         </section>
       </section>
 
+      <!-- Recommendation panel: rendered from /api/recommendations results. -->
       <section class="recommendation-panel" aria-labelledby="recommendations-title">
         <div class="section-heading">
           <div>

@@ -37,7 +37,7 @@ From the project root:
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -r backend\requirements.txt
+pip install -r backend\dependencies.txt
 python -m uvicorn backend.app.main:app --reload
 ```
 

@@ -14,6 +14,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 app = FastAPI(title="Recipe Recommender API")
 
+# The frontend is intentionally simple static HTML/CSS/JS; FastAPI owns the
+# recommendation and catalog APIs behind it.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -25,6 +27,7 @@ app.add_middleware(
 
 @app.get("/")
 def home() -> FileResponse:
+    # Serve the single-page UI while keeping API routes under /api.
     return FileResponse(PROJECT_ROOT / "index.html")
 
 
@@ -46,11 +49,15 @@ def ingredients(q: str = Query(default="", description="Ingredient search text")
 
 @app.post("/api/ingredients", status_code=201)
 def create_ingredient(ingredient: IngredientCreate) -> dict[str, str]:
+    # Unknown user-entered ingredients are persisted so autocomplete improves
+    # over time, even before we have recipes using that ingredient.
     return {"name": add_ingredient(ingredient.name)}
 
 
 @app.post("/api/recommendations")
 def recommendations(request: RecommendationRequest) -> list[RecipeRecommendation]:
+    # Recommendation logic stays server-side so future DB and web discovery work
+    # can evolve without changing the browser contract.
     return recommend_recipes(request.pantry)
 
 

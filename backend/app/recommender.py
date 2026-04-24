@@ -2,6 +2,8 @@ from .models import PantryItem, RecipeRecommendation
 from .recipe_store import load_recipes
 
 
+# MVP quality gate: do not recommend recipes when the pantry only covers a weak
+# fraction of required ingredients.
 MIN_MATCH_SCORE = 0.6
 
 
@@ -26,6 +28,8 @@ def recommend_recipes(pantry: list[PantryItem], limit: int = 5) -> list[RecipeRe
         if match_score < MIN_MATCH_SCORE:
             continue
 
+        # Keep match details in the response so the UI can explain why each
+        # recipe was recommended and what the user is missing.
         recommendations.append(
             RecipeRecommendation(
                 id=recipe.id,
@@ -39,5 +43,7 @@ def recommend_recipes(pantry: list[PantryItem], limit: int = 5) -> list[RecipeRe
             )
         )
 
+    # Prefer stronger pantry matches, then faster recipes, then stable name
+    # ordering for predictable results.
     recommendations.sort(key=lambda recipe: (-recipe.match_score, recipe.time_minutes, recipe.name))
     return recommendations[:limit]

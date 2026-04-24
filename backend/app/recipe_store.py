@@ -11,6 +11,8 @@ INGREDIENTS_PATH = Path(__file__).resolve().parent.parent / "data" / "ingredient
 
 @lru_cache(maxsize=1)
 def load_recipes() -> list[Recipe]:
+    # Recipe data is JSON-backed for the MVP; this boundary can later point to a
+    # database without changing the recommender.
     with DATA_PATH.open(encoding="utf-8") as recipe_file:
         recipes = json.load(recipe_file)
 
@@ -18,6 +20,8 @@ def load_recipes() -> list[Recipe]:
 
 
 def list_ingredients() -> list[str]:
+    # Autocomplete should include both recipe ingredients and user-entered
+    # ingredients that do not have recipes yet.
     ingredients = set(load_user_ingredients())
     ingredients.update({
         ingredient
@@ -41,6 +45,8 @@ def add_ingredient(name: str) -> str:
     if not ingredient:
         raise ValueError("Ingredient name cannot be empty.")
 
+    # Store user additions separately from recipe-derived ingredients so we do
+    # not mutate recipe data just because someone typed a new pantry item.
     ingredients = set(load_user_ingredients())
     ingredients.add(ingredient)
 

@@ -1,3 +1,5 @@
+// Browser-only pantry state for the MVP. The backend owns catalogs and recipes;
+// this array just tracks the current in-progress form session.
 const pantry = [];
 
 const form = document.querySelector("#ingredient-form");
@@ -23,6 +25,8 @@ function showFormError(message) {
 }
 
 async function fetchJson(path, options = {}) {
+  // Small wrapper keeps API error handling consistent across suggestions,
+  // ingredient creation, and recommendations.
   const response = await fetch(path, {
     headers: {
       "Content-Type": "application/json",
@@ -91,6 +95,7 @@ async function renderSuggestions() {
   }
 
   const visibleMatches = matches
+    // Exact matches do not need a dropdown; the user can just add the item.
     .filter((ingredient) => ingredient !== query)
     .filter((ingredient) => !pantry.some((item) => item.name === ingredient))
     .slice(0, 6);
@@ -98,6 +103,8 @@ async function renderSuggestions() {
   visibleMatches.forEach((ingredient) => renderSuggestionButton(ingredient, ingredient));
 
   if (visibleMatches.length === 0 && !matches.includes(query)) {
+    // Users can enter any ingredient. If the catalog does not know it yet, the
+    // add flow will persist it through POST /api/ingredients.
     renderSuggestionButton(`Add "${query}" as new ingredient`, query);
   }
 
@@ -149,6 +156,8 @@ async function renderRecommendations() {
 
   let rankedRecipes = [];
   try {
+    // POST is used because the pantry is structured request data and will grow
+    // with quantities, units, preferences, and future user context.
     rankedRecipes = await fetchJson("/api/recommendations", {
       method: "POST",
       body: JSON.stringify({ pantry })
@@ -207,6 +216,8 @@ async function addIngredient(event) {
   try {
     const matches = await loadIngredientOptions(name);
     if (!matches.includes(name)) {
+      // Save new ingredients before adding them to pantry so future searches
+      // can suggest them.
       ingredientName = await saveIngredient(name);
     }
   } catch (error) {
