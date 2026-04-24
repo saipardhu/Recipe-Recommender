@@ -1,0 +1,51 @@
+[
+  {
+    "id": "tomato-cheese-omelette",
+    "name": "Tomato Cheese Omelette",
+    "ingredients": ["egg", "tomato", "cheese", "onion", "butter"],
+    "time_minutes": 12,
+    "url": "https://www.bbcgoodfood.com/recipes/cheese-tomato-omelette"
+  },
+  {
+    "id": "garlic-tomato-pasta",
+    "name": "Garlic Tomato Pasta",
+    "ingredients": ["pasta", "tomato", "garlic", "onion", "cheese"],
+    "time_minutes": 25,
+    "url": "https://www.bbcgoodfood.com/recipes/tomato-pasta-sauce"
+  },
+  {
+    "id": "potato-cheese-toast",
+    "name": "Potato Cheese Toast",
+    "ingredients": ["potato", "cheese", "bread", "butter"],
+    "time_minutes": 18,
+    "url": "https://www.indianhealthyrecipes.com/potato-sandwich-aloo-sandwich/"
+  },
+  {
+    "id": "spinach-mushroom-rice",
+    "name": "Spinach Mushroom Rice",
+    "ingredients": ["rice", "spinach", "mushroom", "garlic", "onion"],
+    "time_minutes": 30,
+    "url": "https://www.bbcgoodfood.com/recipes/mushroom-rice"
+  },
+  {
+    "id": "chicken-bell-pepper-stir-fry",
+    "name": "Chicken Bell Pepper Stir Fry",
+    "ingredients": ["chicken", "bell pepper", "onion", "garlic", "rice"],
+    "time_minutes": 28,
+    "url": "https://www.bbcgoodfood.com/recipes/chicken-stir-fry"
+  },
+  {
+    "id": "carrot-potato-curry",
+    "name": "Carrot Potato Curry",
+    "ingredients": ["carrot", "potato", "tomato", "onion", "garlic"],
+    "time_minutes": 35,
+    "url": "https://www.indianhealthyrecipes.com/potato-curry-aloo-sabzi/"
+  },
+  {
+    "id": "bean-and-cheese-quesadilla",
+    "name": "Bean and Cheese Quesadilla",
+    "ingredients": ["beans", "cheese", "bell pepper", "onion", "yogurt"],
+    "time_minutes": 20,
+    "url": "https://www.bbcgoodfood.com/recipes/refried-bean-quesadillas"
+  }
+]

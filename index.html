@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recipe Recommender</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="pantry-panel" aria-labelledby="pantry-title">
+        <div>
+          <p class="eyebrow">Kitchen inventory</p>
+          <h1 id="pantry-title">Find recipes from what you already have.</h1>
+        </div>
+
+        <form id="ingredient-form" class="ingredient-form">
+          <label for="ingredient-input">Ingredient</label>
+          <div class="autocomplete">
+            <input
+              id="ingredient-input"
+              name="ingredient"
+              type="text"
+              placeholder="Start typing, e.g. tomato"
+              autocomplete="off"
+              aria-describedby="ingredient-help"
+            >
+            <ul id="suggestions" class="suggestions" aria-label="Ingredient suggestions"></ul>
+          </div>
+          <p id="ingredient-help" class="field-help">Choose an ingredient, then enter how much you have.</p>
+
+          <label for="quantity-input">Quantity available</label>
+          <input id="quantity-input" name="quantity" type="text" placeholder="e.g. 3, 1 cup, 200g">
+
+          <div class="form-actions">
+            <button type="submit">Add ingredient</button>
+            <button id="finish-button" type="button" class="secondary">Finish</button>
+          </div>
+        </form>
+
+        <section class="inventory" aria-labelledby="inventory-title">
+          <div class="section-heading">
+            <h2 id="inventory-title">Your ingredients</h2>
+            <button id="clear-button" type="button" class="text-button">Clear all</button>
+          </div>
+          <ul id="inventory-list" class="inventory-list"></ul>
+          <p id="empty-inventory" class="empty-state">No ingredients added yet.</p>
+        </section>
+      </section>
+
+      <section class="recommendation-panel" aria-labelledby="recommendations-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Top matches</p>
+            <h2 id="recommendations-title">Recommended recipes</h2>
+          </div>
+          <span id="match-count" class="match-count">0 ready</span>
+        </div>
+        <ol id="recipe-list" class="recipe-list"></ol>
+        <p id="empty-recipes" class="empty-state">Add ingredients and press Finish to see recipe ideas.</p>
+      </section>
+    </main>
+
+    <script src="app.js?v=2"></script>
+  </body>
+</html>
