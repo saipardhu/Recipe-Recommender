@@ -103,6 +103,19 @@ input:focus {
   border-color: var(--accent);
 }
 
+.field-help,
+.empty-state,
+.form-error {
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+.form-error {
+  margin-bottom: 0;
+  color: var(--warm);
+  font-weight: 700;
+}
+
 .autocomplete {
   position: relative;
 }
@@ -142,12 +155,6 @@ input:focus {
 .suggestions button:hover,
 .suggestions button:focus {
   background: #edf5ef;
-}
-
-.field-help,
-.empty-state {
-  color: var(--muted);
-  font-size: 0.94rem;
 }
 
 .form-actions,

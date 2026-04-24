@@ -2,6 +2,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from .models import IngredientCreate, RecommendationRequest, RecipeRecommendation
@@ -20,6 +21,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/")
+def home() -> FileResponse:
+    return FileResponse(PROJECT_ROOT / "index.html")
 
 
 @app.get("/api/health")
@@ -48,4 +54,4 @@ def recommendations(request: RecommendationRequest) -> list[RecipeRecommendation
     return recommend_recipes(request.pantry)
 
 
-app.mount("/", StaticFiles(directory=PROJECT_ROOT, html=True), name="frontend")
+app.mount("/static", StaticFiles(directory=PROJECT_ROOT / "static"), name="static")

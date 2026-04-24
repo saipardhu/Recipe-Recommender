@@ -38,3 +38,4 @@ We can start this iteratively, but hte core components include
 1. backend : python or java
 2. webserver : can use FastAPI or flask as they are compatible with python
 3. DB : we need a KV store to store each recipe and the list of ingredients but for other relational entities, we can use a simple postgres or any other realational db
+4. frontend : use a lightweight JavaScript frontend for browser interactions, while keeping recommendation, ingredient catalog, recipe storage, and future web discovery logic in the Python backend

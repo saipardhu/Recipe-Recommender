@@ -1,7 +1,4 @@
-const API_BASE = window.location.protocol === "file:" ? "http://127.0.0.1:8000" : "";
-
 const pantry = [];
-let ingredientOptions = [];
 
 const form = document.querySelector("#ingredient-form");
 const ingredientInput = document.querySelector("#ingredient-input");
@@ -14,19 +11,19 @@ const emptyRecipes = document.querySelector("#empty-recipes");
 const finishButton = document.querySelector("#finish-button");
 const clearButton = document.querySelector("#clear-button");
 const matchCount = document.querySelector("#match-count");
+const formError = document.querySelector("#form-error");
 
 function normalize(value) {
   return value.trim().toLowerCase();
 }
 
-function selectIngredient(name) {
-  ingredientInput.value = name;
-  suggestions.classList.remove("is-open");
-  quantityInput.focus();
+function showFormError(message) {
+  formError.textContent = message;
+  formError.hidden = !message;
 }
 
 async function fetchJson(path, options = {}) {
-  const response = await fetch(`${API_BASE}${path}`, {
+  const response = await fetch(path, {
     headers: {
       "Content-Type": "application/json",
       ...(options.headers || {})
@@ -41,9 +38,29 @@ async function fetchJson(path, options = {}) {
   return response.json();
 }
 
+function closeSuggestions() {
+  suggestions.innerHTML = "";
+  suggestions.classList.remove("is-open");
+}
+
+function selectIngredient(name) {
+  ingredientInput.value = name;
+  closeSuggestions();
+  quantityInput.focus();
+}
+
+function renderSuggestionButton(label, ingredient) {
+  const item = document.createElement("li");
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = label;
+  button.addEventListener("click", () => selectIngredient(ingredient));
+  item.append(button);
+  suggestions.append(item);
+}
+
 async function loadIngredientOptions(query = "") {
-  ingredientOptions = await fetchJson(`/api/ingredients?q=${encodeURIComponent(query)}`);
-  return ingredientOptions;
+  return fetchJson(`/api/ingredients?q=${encodeURIComponent(query)}`);
 }
 
 async function saveIngredient(name) {
@@ -60,7 +77,7 @@ async function renderSuggestions() {
   suggestions.innerHTML = "";
 
   if (!query) {
-    suggestions.classList.remove("is-open");
+    closeSuggestions();
     return;
   }
 
@@ -68,37 +85,23 @@ async function renderSuggestions() {
   try {
     matches = await loadIngredientOptions(query);
   } catch (error) {
-    showRecipeMessage("Could not load ingredients. Is the backend running?");
+    showFormError("Could not load ingredients. Is the backend running?");
+    closeSuggestions();
     return;
   }
 
-  matches = matches
+  const visibleMatches = matches
+    .filter((ingredient) => ingredient !== query)
     .filter((ingredient) => !pantry.some((item) => item.name === ingredient))
     .slice(0, 6);
 
-  if (matches.length === 0) {
-    const item = document.createElement("li");
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = `Add "${query}" as new ingredient`;
-    button.addEventListener("click", () => selectIngredient(query));
-    item.append(button);
-    suggestions.append(item);
-    suggestions.classList.add("is-open");
-    return;
+  visibleMatches.forEach((ingredient) => renderSuggestionButton(ingredient, ingredient));
+
+  if (visibleMatches.length === 0 && !matches.includes(query)) {
+    renderSuggestionButton(`Add "${query}" as new ingredient`, query);
   }
 
-  matches.forEach((ingredient) => {
-    const item = document.createElement("li");
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = ingredient;
-    button.addEventListener("click", () => selectIngredient(ingredient));
-    item.append(button);
-    suggestions.append(item);
-  });
-
-  suggestions.classList.add("is-open");
+  suggestions.classList.toggle("is-open", suggestions.children.length > 0);
 }
 
 function renderInventory() {
@@ -160,7 +163,7 @@ async function renderRecommendations() {
   emptyRecipes.hidden = rankedRecipes.length > 0;
 
   if (rankedRecipes.length === 0) {
-    showRecipeMessage("No recipe matches yet. Try adding more ingredients.");
+    showRecipeMessage("No recipe matches yet. Web discovery will backfill this list in the next iteration.");
     return;
   }
 
@@ -189,29 +192,26 @@ async function renderRecommendations() {
 
 async function addIngredient(event) {
   event.preventDefault();
+  showFormError("");
 
   const name = normalize(ingredientInput.value);
   const quantity = quantityInput.value.trim();
 
   if (!name || !quantity) {
+    showFormError("Ingredient and quantity are both required.");
     return;
   }
 
   let ingredientName = name;
 
-  if (!ingredientOptions.includes(ingredientName)) {
-    await loadIngredientOptions(name);
-  }
-
-  if (!ingredientOptions.includes(ingredientName)) {
-    try {
-      const savedIngredient = await saveIngredient(name);
-      ingredientName = savedIngredient;
-      ingredientOptions.push(savedIngredient);
-    } catch (error) {
-      showRecipeMessage("Could not save that ingredient. Is the backend running?");
-      return;
+  try {
+    const matches = await loadIngredientOptions(name);
+    if (!matches.includes(name)) {
+      ingredientName = await saveIngredient(name);
     }
+  } catch (error) {
+    showFormError("Could not save that ingredient. Is the backend running?");
+    return;
   }
 
   const existing = pantry.find((item) => item.name === ingredientName);
@@ -223,7 +223,7 @@ async function addIngredient(event) {
 
   ingredientInput.value = "";
   quantityInput.value = "";
-  suggestions.classList.remove("is-open");
+  closeSuggestions();
   renderInventory();
   clearRecommendations();
   ingredientInput.focus();
@@ -241,12 +241,9 @@ clearButton.addEventListener("click", () => {
 
 document.addEventListener("click", (event) => {
   if (!suggestions.contains(event.target) && event.target !== ingredientInput) {
-    suggestions.classList.remove("is-open");
+    closeSuggestions();
   }
 });
 
-loadIngredientOptions().catch(() => {
-  showRecipeMessage("Start the backend to load ingredients and recommendations.");
-});
 renderInventory();
 clearRecommendations();

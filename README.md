@@ -3,7 +3,7 @@ A sample recommender for food recipe based on ingredients you have
 
 ## Current MVP
 
-This first local version has a static frontend backed by a Python FastAPI API. It lets a user:
+This first local version uses a small JavaScript frontend backed by a Python FastAPI API. It lets a user:
 
 - Search and select ingredients from an autocomplete list.
 - Add any ingredient they have, even if it is not already in the catalog.
@@ -13,6 +13,8 @@ This first local version has a static frontend backed by a Python FastAPI API. I
 - Open matching recipe links online.
 
 Recipe matching currently uses a small JSON recipe dataset in `backend/data/recipes.json`.
+The browser UI is intentionally lightweight JavaScript, while recipe and ingredient logic stays in the Python backend.
+Frontend assets are served from `index.html` and the `static/` folder.
 
 ## Product Direction
 
@@ -55,7 +57,14 @@ python backend\dev_server.py
 
 - `GET /api/health`
 - `GET /api/ingredients?q=tom`
+- `POST /api/ingredients`
 - `POST /api/recommendations`
+
+## Web routes
+
+- `GET /`
+- `GET /static/styles.css`
+- `GET /static/app.js`
 
 Example recommendation request:
 

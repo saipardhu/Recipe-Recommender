@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Recipe Recommender</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
   </head>
   <body>
     <main class="app-shell">
@@ -27,10 +27,12 @@
             >
             <ul id="suggestions" class="suggestions" aria-label="Ingredient suggestions"></ul>
           </div>
-          <p id="ingredient-help" class="field-help">Choose an ingredient, then enter how much you have.</p>
+          <p id="ingredient-help" class="field-help">Type any ingredient. New ingredients are saved to the catalog.</p>
 
           <label for="quantity-input">Quantity available</label>
           <input id="quantity-input" name="quantity" type="text" placeholder="e.g. 3, 1 cup, 200g">
+
+          <p id="form-error" class="form-error" hidden></p>
 
           <div class="form-actions">
             <button type="submit">Add ingredient</button>
@@ -61,6 +63,6 @@
       </section>
     </main>
 
-    <script src="app.js?v=2"></script>
+    <script src="/static/app.js"></script>
   </body>
 </html>
