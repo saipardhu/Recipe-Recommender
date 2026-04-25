@@ -2,5 +2,10 @@
 .python-packages/
 __pycache__/
 *.pyc
+.pytest-tmp/
+.pytest_cache/
+pytest-cache-files-*/
+test-temp/
+tests/runtime-data/
 server.log
 server.err.log

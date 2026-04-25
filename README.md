@@ -54,6 +54,12 @@ If dependencies were installed into the local `.python-packages` folder, use:
 python backend\dev_server.py
 ```
 
+## Run tests
+
+```powershell
+python -m pytest
+```
+
 ## API endpoints
 
 - `GET /api/health`
