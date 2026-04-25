@@ -15,6 +15,7 @@ This first local version uses a small JavaScript frontend backed by a Python Fas
 Recipe matching currently uses a small JSON recipe dataset in `backend/data/recipes.json`.
 The browser UI is intentionally lightweight JavaScript, while recipe and ingredient logic stays in the Python backend.
 Frontend assets are served from `index.html` and the `static/` folder.
+When local recipes cannot fill the recommendation list, the backend can backfill from TheMealDB and save useful matches into the local recipe dataset.
 
 ## Product Direction
 
@@ -59,6 +60,18 @@ python backend\dev_server.py
 - `GET /api/ingredients?q=tom`
 - `POST /api/ingredients`
 - `POST /api/recommendations`
+
+## Recipe Discovery
+
+Recommendations are local-first:
+
+1. Search `backend/data/recipes.json`.
+2. Keep only recipes with at least a 60% pantry match.
+3. If fewer than 5 recipes qualify, query TheMealDB by pantry ingredients.
+4. Lookup full recipe details for discovered meals.
+5. Store qualifying discovered recipes back into `backend/data/recipes.json`.
+
+TheMealDB does not provide cooking time in its free response, so discovered recipes currently use a default `45` minute estimate.
 
 ## Web routes
 

@@ -19,6 +19,23 @@ def load_recipes() -> list[Recipe]:
     return [Recipe(**recipe) for recipe in recipes]
 
 
+def save_new_recipes(recipes: list[Recipe]) -> list[Recipe]:
+    existing_recipes = load_recipes()
+    existing_ids = {recipe.id for recipe in existing_recipes}
+    new_recipes = [recipe for recipe in recipes if recipe.id not in existing_ids]
+
+    if not new_recipes:
+        return []
+
+    all_recipes = existing_recipes + new_recipes
+    with DATA_PATH.open("w", encoding="utf-8") as recipe_file:
+        json.dump([recipe.model_dump() for recipe in all_recipes], recipe_file, indent=2)
+        recipe_file.write("\n")
+
+    load_recipes.cache_clear()
+    return new_recipes
+
+
 def list_ingredients() -> list[str]:
     # Autocomplete should include both recipe ingredients and user-entered
     # ingredients that do not have recipes yet.

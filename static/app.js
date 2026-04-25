@@ -14,6 +14,7 @@ const finishButton = document.querySelector("#finish-button");
 const clearButton = document.querySelector("#clear-button");
 const matchCount = document.querySelector("#match-count");
 const formError = document.querySelector("#form-error");
+const recommendationLoader = document.querySelector("#recommendation-loader");
 
 function normalize(value) {
   return value.trim().toLowerCase();
@@ -136,6 +137,7 @@ function renderInventory() {
 
 function showRecipeMessage(message) {
   recipeList.innerHTML = "";
+  recommendationLoader.hidden = true;
   emptyRecipes.textContent = message;
   emptyRecipes.hidden = false;
   matchCount.textContent = "0 ready";
@@ -143,9 +145,16 @@ function showRecipeMessage(message) {
 
 function clearRecommendations() {
   recipeList.innerHTML = "";
+  recommendationLoader.hidden = true;
   matchCount.textContent = "0 ready";
   emptyRecipes.textContent = "Add ingredients and press Finish to see recipe ideas.";
   emptyRecipes.hidden = false;
+}
+
+function setRecommendationLoading(isLoading) {
+  recommendationLoader.hidden = !isLoading;
+  finishButton.disabled = isLoading;
+  finishButton.textContent = isLoading ? "Searching..." : "Finish";
 }
 
 async function renderRecommendations() {
@@ -156,6 +165,10 @@ async function renderRecommendations() {
 
   let rankedRecipes = [];
   try {
+    setRecommendationLoading(true);
+    recipeList.innerHTML = "";
+    emptyRecipes.textContent = "This may take a few seconds when web discovery is needed.";
+    emptyRecipes.hidden = false;
     // POST is used because the pantry is structured request data and will grow
     // with quantities, units, preferences, and future user context.
     rankedRecipes = await fetchJson("/api/recommendations", {
@@ -165,6 +178,8 @@ async function renderRecommendations() {
   } catch (error) {
     showRecipeMessage("Could not load recommendations. Is the backend running?");
     return;
+  } finally {
+    setRecommendationLoading(false);
   }
 
   recipeList.innerHTML = "";

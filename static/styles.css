@@ -260,6 +260,34 @@ button:hover {
   font-weight: 800;
 }
 
+.loader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 4px;
+  color: var(--muted);
+  font-size: 0.94rem;
+  font-weight: 700;
+}
+
+.loader[hidden] {
+  display: none;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #dbe4dc;
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
 .recipe-list {
   counter-reset: recipes;
 }
@@ -313,6 +341,12 @@ button:hover {
 .recipe-link:hover {
   color: var(--accent-dark);
   text-decoration: underline;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 820px) {

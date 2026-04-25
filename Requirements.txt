@@ -18,6 +18,7 @@ We can start this iteratively, but hte core components include
 2.5 if our recipe book does not have enough useful matches to fill 5 recommendations, the app should search/scrape the web for the closest matching recipes.
 2.6 when we find a useful recipe from the web, we must store it in our recipe book so the same or similar future request can be served from our own data first.
 2.7 in the future, the recommendation count should be configurable from the user prompt or user preferences.
+2.8 for the MVP web discovery implementation, we can start with a public recipe API such as TheMealDB before expanding to broader website scraping.
 
 3. We can link them the desired recipes online if they are already present.
 
@@ -28,6 +29,7 @@ We can start this iteratively, but hte core components include
 4. users can share the recipes or take pics of their food and share it in the internet.
 5. users can create their profiles such that they can use it as their catering business, we can act as the online marketplace for such services.
 6. have our own DB of collection of all the recipes ( we could also scrape from the web for recipes) 
+7. add a new button to let users pick the cuisines(Indian, Italian, Mexican, Chinese etc)
 
 
 *** development instructions
