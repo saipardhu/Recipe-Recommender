@@ -111,5 +111,74 @@
     ],
     "time_minutes": 45,
     "url": "https://www.bbc.co.uk/food/recipes/beef_and_mustard_pie_58002"
+  },
+  {
+    "id": "themealdb-53006",
+    "name": "Moussaka",
+    "ingredients": [
+      "beef",
+      "aubergine",
+      "greek yogurt",
+      "egg",
+      "parmesan",
+      "tomato",
+      "tomato puree",
+      "potato"
+    ],
+    "time_minutes": 45,
+    "url": "https://www.bbcgoodfood.com/recipes/must-make-moussaka"
+  },
+  {
+    "id": "themealdb-53068",
+    "name": "Beef Mechado",
+    "ingredients": [
+      "garlic",
+      "onion",
+      "beef",
+      "tomato puree",
+      "water",
+      "olive oil",
+      "lemon",
+      "potato",
+      "soy sauce",
+      "black pepper",
+      "bay leave",
+      "salt"
+    ],
+    "time_minutes": 45,
+    "url": "https://panlasangpinoy.com/filipino-pinoy-food-tomato-sauce-beef-mechado-recipe/"
+  },
+  {
+    "id": "themealdb-53069",
+    "name": "Bistek",
+    "ingredients": [
+      "beef",
+      "soy sauce",
+      "lemon",
+      "garlic",
+      "onion",
+      "olive oil",
+      "water",
+      "salt"
+    ],
+    "time_minutes": 45,
+    "url": "https://panlasangpinoy.com/bistek-tagalog-beefsteak-recipe/"
+  },
+  {
+    "id": "themealdb-53141",
+    "name": "Carbonada Criolla",
+    "ingredients": [
+      "beef",
+      "onion",
+      "carrot",
+      "potato",
+      "pumpkin",
+      "dried apricot",
+      "beef stock",
+      "salt",
+      "pepper"
+    ],
+    "time_minutes": 45,
+    "url": "https://www.munchery.com/blog/the-ten-iconic-dishes-of-argentina-and-how-to-cook-them-at-home/"
   }
 ]

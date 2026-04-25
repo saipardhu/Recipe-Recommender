@@ -72,6 +72,7 @@ Recommendations are local-first:
 5. Store qualifying discovered recipes back into `backend/data/recipes.json`.
 
 TheMealDB does not provide cooking time in its free response, so discovered recipes currently use a default `45` minute estimate.
+Matching also normalizes common ingredient variants, such as singular/plural forms, and ignores pantry staples like salt, pepper, oil, and water when calculating the 60% match threshold.
 
 ## Web routes
 

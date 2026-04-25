@@ -19,6 +19,7 @@ We can start this iteratively, but hte core components include
 2.6 when we find a useful recipe from the web, we must store it in our recipe book so the same or similar future request can be served from our own data first.
 2.7 in the future, the recommendation count should be configurable from the user prompt or user preferences.
 2.8 for the MVP web discovery implementation, we can start with a public recipe API such as TheMealDB before expanding to broader website scraping.
+2.9 the recommender should normalize common ingredient variations, such as singular/plural names, and should not penalize users for missing basic pantry staples like salt, pepper, oil, and water.
 
 3. We can link them the desired recipes online if they are already present.
 

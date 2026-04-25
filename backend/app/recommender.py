@@ -1,4 +1,5 @@
 from .discovery import discover_recipes
+from .ingredient_matcher import ingredient_matches, is_pantry_staple, normalize_ingredient
 from .models import PantryItem, Recipe, RecipeRecommendation
 from .recipe_store import load_recipes, save_new_recipes
 
@@ -9,19 +10,23 @@ MIN_MATCH_SCORE = 0.6
 
 
 def normalize(value: str) -> str:
-    return value.strip().lower()
+    return normalize_ingredient(value)
 
 
 def score_recipe(recipe: Recipe, pantry: list[PantryItem]) -> RecipeRecommendation | None:
     available = {normalize(item.name) for item in pantry}
-    required = [normalize(ingredient) for ingredient in recipe.ingredients]
-    matched = [ingredient for ingredient in required if ingredient in available]
+    required = [
+        normalize(ingredient)
+        for ingredient in recipe.ingredients
+        if not is_pantry_staple(ingredient)
+    ]
+    matched = [ingredient for ingredient in required if ingredient_matches(ingredient, available)]
 
     if not matched:
         return None
 
-    missing = [ingredient for ingredient in required if ingredient not in available]
-    match_score = len(matched) / len(required)
+    missing = [ingredient for ingredient in required if not ingredient_matches(ingredient, available)]
+    match_score = len(matched) / len(required) if required else 0
 
     if match_score < MIN_MATCH_SCORE:
         return None

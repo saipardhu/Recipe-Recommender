@@ -4,16 +4,18 @@ import urllib.parse
 import urllib.request
 
 from .models import PantryItem, Recipe
+from .ingredient_matcher import ingredient_matches, is_pantry_staple, normalize_ingredient
 
 
 THEMEALDB_BASE_URL = "https://www.themealdb.com/api/json/v1"
 THEMEALDB_API_KEY = os.getenv("THEMEALDB_API_KEY", "1")
 DEFAULT_DISCOVERED_TIME_MINUTES = 45
 REQUEST_TIMEOUT_SECONDS = 8
+MAX_CANDIDATES_PER_INGREDIENT = 20
 
 
 def normalize(value: str) -> str:
-    return value.strip().lower()
+    return normalize_ingredient(value)
 
 
 def fetch_json(url: str) -> dict:
@@ -57,11 +59,15 @@ def recipe_from_mealdb(meal: dict) -> Recipe | None:
 
 
 def pantry_match_score(recipe: Recipe, pantry: list[PantryItem]) -> float:
-    available = {normalize(item.name) for item in pantry}
-    required = [normalize(ingredient) for ingredient in recipe.ingredients]
-    matched = [ingredient for ingredient in required if ingredient in available]
+    available = {normalize_ingredient(item.name) for item in pantry}
+    required = [
+        normalize_ingredient(ingredient)
+        for ingredient in recipe.ingredients
+        if not is_pantry_staple(ingredient)
+    ]
+    matched = [ingredient for ingredient in required if ingredient_matches(ingredient, available)]
 
-    return len(matched) / len(required)
+    return len(matched) / len(required) if required else 0
 
 
 def discover_recipes(
@@ -85,7 +91,7 @@ def discover_recipes(
         except Exception:
             continue
 
-        for meal in meals[:8]:
+        for meal in meals[:MAX_CANDIDATES_PER_INGREDIENT]:
             if len(discovered) >= limit:
                 break
 
