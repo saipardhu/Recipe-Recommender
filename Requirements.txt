@@ -51,22 +51,22 @@ We can start this iteratively, but hte core components include
   5.1 [x] users can open the desired recipe online if a source URL is already present.
 
 *** Frontend Goals
-1. [ ] Visual direction
-  1.1 [ ] use `docs/design/recipe-magazine-ui-reference.png` as the preferred frontend visual reference.
-  1.2 [ ] move the app toward a warm recipe-magazine style rather than a plain backend-dashboard look.
-  1.3 [ ] use a warm creamy page background.
-  1.4 [ ] use a rich tomato-red primary accent.
-  1.5 [ ] use herb green as a secondary accent for match states and recipe actions.
+1. [x] Visual direction
+  1.1 [x] use `docs/design/recipe-magazine-ui-reference.png` as the preferred frontend visual reference.
+  1.2 [x] move the app toward a warm recipe-magazine style rather than a plain backend-dashboard look.
+  1.3 [x] use a warm creamy page background.
+  1.4 [x] use a rich tomato-red primary accent.
+  1.5 [x] use herb green as a secondary accent for match states and recipe actions.
 
-2. [ ] Recipe and ingredient presentation
-  2.1 [ ] use editorial-style recipe cards with stronger visual hierarchy.
-  2.2 [ ] show food imagery where recipe data or UI context supports it.
-  2.3 [ ] add small ingredient images or visual ingredient chips where practical.
-  2.4 [ ] add polished page-level food imagery, such as decorative tomato/ingredient visuals, without hurting usability.
+2. [x] Recipe and ingredient presentation
+  2.1 [x] use editorial-style recipe cards with stronger visual hierarchy.
+  2.2 [x] show food imagery where recipe data or UI context supports it.
+  2.3 [x] add small ingredient images or visual ingredient chips where practical.
+  2.4 [x] add polished page-level food imagery, such as decorative tomato/ingredient visuals, without hurting usability.
 
-3. [ ] Interaction polish
-  3.1 [ ] improve empty states, loading states, buttons, form controls, and recommendation cards so the app feels intentionally designed.
-  3.2 [ ] keep the current pantry-to-recommendation workflow clear and usable while improving the visual design.
+3. [x] Interaction polish
+  3.1 [x] improve empty states, loading states, buttons, form controls, and recommendation cards so the app feels intentionally designed.
+  3.2 [x] keep the current pantry-to-recommendation workflow clear and usable while improving the visual design.
 
 *** Future Scope
 1. [ ] User recipe and pantry management

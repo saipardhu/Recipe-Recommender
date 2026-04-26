@@ -16,6 +16,19 @@ const clearButton = document.querySelector("#clear-button");
 const matchCount = document.querySelector("#match-count");
 const formError = document.querySelector("#form-error");
 const recommendationLoader = document.querySelector("#recommendation-loader");
+const recommendationSummary = document.querySelector("#recommendation-summary");
+
+const cuisineAccents = {
+  Argentinian: "rust",
+  British: "sage",
+  Chinese: "chili",
+  Filipino: "sun",
+  Greek: "olive",
+  Indian: "turmeric",
+  Italian: "tomato",
+  Mexican: "avocado",
+  Spanish: "paprika"
+};
 
 function normalize(value) {
   return value.trim().toLowerCase();
@@ -24,6 +37,10 @@ function normalize(value) {
 function showFormError(message) {
   formError.textContent = message;
   formError.hidden = !message;
+}
+
+function getRecipeAccent(recipe) {
+  return cuisineAccents[recipe.cuisine] || "tomato";
 }
 
 async function fetchJson(path, options = {}) {
@@ -119,12 +136,17 @@ function renderInventory() {
 
   pantry.forEach((item, index) => {
     const row = document.createElement("li");
-    row.innerHTML = `<span><strong>${item.name}</strong> <span>${item.quantity}</span></span>`;
+    row.innerHTML = `
+      <span class="ingredient-icon" aria-hidden="true"></span>
+      <span class="ingredient-copy"><strong>${item.name}</strong> <span>${item.quantity}</span></span>
+    `;
 
     const removeButton = document.createElement("button");
     removeButton.type = "button";
     removeButton.className = "remove-button";
-    removeButton.textContent = "Remove";
+    removeButton.setAttribute("aria-label", `Remove ${item.name}`);
+    removeButton.title = `Remove ${item.name}`;
+    removeButton.textContent = "x";
     removeButton.addEventListener("click", () => {
       pantry.splice(index, 1);
       renderInventory();
@@ -139,6 +161,7 @@ function renderInventory() {
 function showRecipeMessage(message) {
   recipeList.innerHTML = "";
   recommendationLoader.hidden = true;
+  recommendationSummary.hidden = true;
   emptyRecipes.textContent = message;
   emptyRecipes.hidden = false;
   matchCount.textContent = "0 ready";
@@ -147,6 +170,7 @@ function showRecipeMessage(message) {
 function clearRecommendations() {
   recipeList.innerHTML = "";
   recommendationLoader.hidden = true;
+  recommendationSummary.hidden = true;
   matchCount.textContent = "0 ready";
   emptyRecipes.textContent = "Add ingredients and press Finish to see recipe ideas.";
   emptyRecipes.hidden = false;
@@ -187,30 +211,40 @@ async function renderRecommendations() {
   recipeList.innerHTML = "";
   matchCount.textContent = `${rankedRecipes.length} ready`;
   emptyRecipes.hidden = rankedRecipes.length > 0;
+  recommendationSummary.hidden = rankedRecipes.length === 0;
 
   if (rankedRecipes.length === 0) {
     showRecipeMessage("No recipe matches yet. Web discovery will backfill this list in the next iteration.");
     return;
   }
 
+  recommendationSummary.innerHTML = `
+    <span aria-hidden="true"></span>
+    <p>Great job. You can make <strong>${rankedRecipes.length}</strong> delicious ${rankedRecipes.length === 1 ? "recipe" : "recipes"} with what you have.</p>
+  `;
+
   rankedRecipes.forEach((recipe) => {
     const card = document.createElement("li");
     card.className = "recipe-card";
+    card.dataset.accent = getRecipeAccent(recipe);
 
     const missingText = recipe.missing_ingredients.length
-      ? `<p class="missing-list">Missing: ${recipe.missing_ingredients.map((ingredient) => `<span>${ingredient}</span>`).join("")}</p>`
-      : `<p class="missing-list"><span>All ingredients available</span></p>`;
+      ? `<p class="missing-list"><strong>Missing:</strong> ${recipe.missing_ingredients.map((ingredient) => `<span>${ingredient}</span>`).join("")}</p>`
+      : `<p class="missing-list"><strong>Ready:</strong> <span>All ingredients available</span></p>`;
 
     card.innerHTML = `
-      <h3>${recipe.name}</h3>
-      <p class="recipe-meta">
-        <span>${recipe.time_minutes} min</span>
-        ${recipe.cuisine ? `<span>${recipe.cuisine}</span>` : ""}
-        <span>${Math.round(recipe.match_score * 100)}% pantry match</span>
-        <span>${recipe.matched_ingredients.length}/${recipe.ingredients.length} ingredients</span>
-      </p>
-      ${missingText}
-      <a class="recipe-link" href="${recipe.url}" target="_blank" rel="noreferrer">Open recipe</a>
+      <div class="recipe-visual" aria-hidden="true"></div>
+      <div class="recipe-content">
+        <h3>${recipe.name}</h3>
+        <p class="recipe-meta">
+          ${recipe.cuisine ? `<span class="cuisine-pill">${recipe.cuisine}</span>` : ""}
+          <span>${recipe.time_minutes} min</span>
+          <span>${Math.round(recipe.match_score * 100)}% pantry match</span>
+          <span>${recipe.matched_ingredients.length}/${recipe.ingredients.length} ingredients</span>
+        </p>
+        ${missingText}
+        <a class="recipe-link" href="${recipe.url}" target="_blank" rel="noreferrer">Open recipe <span aria-hidden="true">-&gt;</span></a>
+      </div>
     `;
 
     recipeList.append(card);

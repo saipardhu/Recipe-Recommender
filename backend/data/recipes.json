@@ -429,5 +429,36 @@
     ],
     "time_minutes": 45,
     "url": "https://www.indianhealthyrecipes.com/chana-dal-recipe/"
+  },
+  {
+    "id": "indianhealthyrecipes-chana-masala",
+    "name": "Authentic Chana Masala (Chickpea Masala)",
+    "cuisine": "Indian",
+    "core_ingredients": [
+      "chickpea"
+    ],
+    "ingredients": [
+      "chickpea",
+      "water",
+      "oil",
+      "bay leaf",
+      "cinnamon",
+      "cardamom",
+      "onion",
+      "green chili",
+      "ginger garlic paste",
+      "tomato",
+      "salt",
+      "turmeric",
+      "kashmiri red chili powder",
+      "garam masala",
+      "coriander powder",
+      "cumin powder",
+      "kasuri methi",
+      "amchur",
+      "coriander"
+    ],
+    "time_minutes": 50,
+    "url": "https://www.indianhealthyrecipes.com/chana-masala/"
   }
 ]
