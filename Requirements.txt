@@ -3,49 +3,49 @@ The project is to build a recommendations engine for the recipes to cook based o
 
 *** What needs to be build (MVP state Requirements)
 We can start this iteratively, but hte core components include
-1. A web interface where users submit the form of the ingredients and the quantities they have (like for example, 3 tomatoes, 5 potatoes, 1 cheese etc). 
-1.1 we can allow users to start typing the ingredient (they start typing tom and we should populate all possible options nad they will chose/select the appropriate one)
-1.2 once they pick the ingredients, we must prompt to ask how many they currently have available.
-1.3 at every step we can ask them if that is all they have and once they hit "finish" action, we can say that its all the set of ingredients they have.
-1.4 users must be able to add any ingredient they have, even when it is not already present in our ingredient list.
-1.5 when a new ingredient is submitted, we must add it to our ingredient list/catalog so it can be suggested in the future.
+1. [x] A web interface where users submit the form of the ingredients and the quantities they have (like for example, 3 tomatoes, 5 potatoes, 1 cheese etc).
+1.1 [x] we can allow users to start typing the ingredient (they start typing tom and we should populate all possible options nad they will chose/select the appropriate one)
+1.2 [x] once they pick the ingredients, we must prompt to ask how many they currently have available.
+1.3 [x] at every step we can ask them if that is all they have and once they hit "finish" action, we can say that its all the set of ingredients they have.
+1.4 [x] users must be able to add any ingredient they have, even when it is not already present in our ingredient list.
+1.5 [x] when a new ingredient is submitted, we must add it to our ingredient list/catalog so it can be suggested in the future.
 
-2. Once all the ingredients are submitted, we must recommend top5 dishes/recipes they can cook with what they have, and give them the list ranked by cooking time.
-2.1 the recommendation engine must first search our existing recipe book/database for matching recipes.
-2.2 a recipe is considered a useful match only if at least 60% of its required ingredients are available in the user's pantry.
-2.3 the recommendation response should always try to return 5 recipes.
-2.4 the 5 recommendations can be a mix of recipes from our own recipe book and web-discovered recipes, but every returned recipe must satisfy the 60% match rule.
-2.5 if our recipe book does not have enough useful matches to fill 5 recommendations, the app should search trusted recipe sources for the closest matching recipes.
-2.6 when we find a useful recipe from the web, we must store it in our recipe book so the same or similar future request can be served from our own data first.
-2.7 in the future, the recommendation count should be configurable from the user prompt or user preferences.
-2.8 for the MVP web discovery implementation, we can start with a public recipe API such as TheMealDB before expanding to broader website scraping.
-2.9 the recommender should normalize common ingredient variations, such as singular/plural names, and should not penalize users for missing basic pantry staples like salt, pepper, oil, and water.
-2.10 users can optionally select a cuisine type for recommendations.
-2.11 if the user selects a cuisine, that cuisine must be treated as a hard filter; all returned recipes must match that cuisine and still satisfy the 60% pantry match rule.
-2.12 a recipe should not be recommended if its core ingredient is missing, even when the rest of the supporting ingredients satisfy the 60% match rule.
-2.13 each recipe should include a core_ingredients list so the recommender can validate the ingredients that define the dish; inference from recipe titles should only be a fallback.
-2.14 if our local recipe book and TheMealDB cannot fill 5 useful matches, the backend should use curated cuisine-specific websites as fallbacks by reading structured recipe metadata from recipe pages.
-2.15 website discovery should be source-specific and controlled rather than an unrestricted crawl of the public internet.
-2.16 initial curated website sources include Indian Healthy Recipes for Indian recipes, Omnivore's Cookbook for Chinese recipes, Vincenzo's Plate for Italian recipes, and Mexican Please plus Simply Recipes for Mexican recipes.
+2. [x] Once all the ingredients are submitted, we must recommend top5 dishes/recipes they can cook with what they have, and give them the list ranked by cooking time.
+2.1 [x] the recommendation engine must first search our existing recipe book/database for matching recipes.
+2.2 [x] a recipe is considered a useful match only if at least 60% of its required ingredients are available in the user's pantry.
+2.3 [x] the recommendation response should always try to return 5 recipes.
+2.4 [x] the 5 recommendations can be a mix of recipes from our own recipe book and web-discovered recipes, but every returned recipe must satisfy the 60% match rule.
+2.5 [x] if our recipe book does not have enough useful matches to fill 5 recommendations, the app should search trusted recipe sources for the closest matching recipes.
+2.6 [x] when we find a useful recipe from the web, we must store it in our recipe book so the same or similar future request can be served from our own data first.
+2.7 [ ] in the future, the recommendation count should be configurable from the user prompt or user preferences.
+2.8 [x] for the MVP web discovery implementation, we can start with a public recipe API such as TheMealDB before expanding to broader website scraping.
+2.9 [x] the recommender should normalize common ingredient variations, such as singular/plural names, and should not penalize users for missing basic pantry staples like salt, pepper, oil, and water.
+2.10 [x] users can optionally select a cuisine type for recommendations.
+2.11 [x] if the user selects a cuisine, that cuisine must be treated as a hard filter; all returned recipes must match that cuisine and still satisfy the 60% pantry match rule.
+2.12 [x] a recipe should not be recommended if its core ingredient is missing, even when the rest of the supporting ingredients satisfy the 60% match rule.
+2.13 [x] each recipe should include a core_ingredients list so the recommender can validate the ingredients that define the dish; inference from recipe titles should only be a fallback.
+2.14 [x] if our local recipe book and TheMealDB cannot fill 5 useful matches, the backend should use curated cuisine-specific websites as fallbacks by reading structured recipe metadata from recipe pages.
+2.15 [x] website discovery should be source-specific and controlled rather than an unrestricted crawl of the public internet.
+2.16 [x] initial curated website sources include Indian Healthy Recipes for Indian recipes, Omnivore's Cookbook for Chinese recipes, Vincenzo's Plate for Italian recipes, and Mexican Please plus Simply Recipes for Mexican recipes.
 
-3. We can link them the desired recipes online if they are already present.
+3. [x] We can link them the desired recipes online if they are already present.
 
 *** Future Scope
-1. Users can add their own recipes which we store in our central recipes DB
-2. Users can add all the list of groceries they bough on their shopping day, so that we have an idea of what exactly they currently have in their kitchen.
-3. Based on #2 We want to make this into an app, such that we study users cooking and eating preferences and send notifications at appropriate time of day suggesting a particular recipe is good
-4. users can share the recipes or take pics of their food and share it in the internet.
-5. users can create their profiles such that they can use it as their catering business, we can act as the online marketplace for such services.
-6. have our own DB of collection of all the recipes ( we could also scrape from the web for recipes) 
-7. add a new button to let users pick the cuisines(Indian, Italian, Mexican, Chinese etc)
+1. [ ] Users can add their own recipes which we store in our central recipes DB
+2. [ ] Users can add all the list of groceries they bough on their shopping day, so that we have an idea of what exactly they currently have in their kitchen.
+3. [ ] Based on #2 We want to make this into an app, such that we study users cooking and eating preferences and send notifications at appropriate time of day suggesting a particular recipe is good
+4. [ ] users can share the recipes or take pics of their food and share it in the internet.
+5. [ ] users can create their profiles such that they can use it as their catering business, we can act as the online marketplace for such services.
+6. [ ] have our own DB of collection of all the recipes ( we could also scrape from the web for recipes)
+7. [x] add a new button to let users pick the cuisines(Indian, Italian, Mexican, Chinese etc)
 
 
 *** development instructions
-1. lets first start with the MVP requirements and show me every change youre making, lets build out by starting very basic and then move forward, set up everything locally first
-2. lets build the backend via python or java
+1. [x] lets first start with the MVP requirements and show me every change youre making, lets build out by starting very basic and then move forward, set up everything locally first
+2. [x] lets build the backend via python or java
 
 *** technologies to use
-1. backend : python or java
-2. webserver : can use FastAPI or flask as they are compatible with python
-3. DB : we need a KV store to store each recipe and the list of ingredients but for other relational entities, we can use a simple postgres or any other realational db
-4. frontend : use a lightweight JavaScript frontend for browser interactions, while keeping recommendation, ingredient catalog, recipe storage, and future web discovery logic in the Python backend
+1. [x] backend : python or java
+2. [x] webserver : can use FastAPI or flask as they are compatible with python
+3. [x] DB : we need a KV store to store each recipe and the list of ingredients but for other relational entities, we can use a simple postgres or any other realational db
+4. [x] frontend : use a lightweight JavaScript frontend for browser interactions, while keeping recommendation, ingredient catalog, recipe storage, and future web discovery logic in the Python backend
