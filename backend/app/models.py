@@ -12,11 +12,14 @@ class IngredientCreate(BaseModel):
 
 class RecommendationRequest(BaseModel):
     pantry: list[PantryItem]
+    cuisine: str | None = None
 
 
 class Recipe(BaseModel):
     id: str
     name: str
+    cuisine: str | None = None
+    core_ingredients: list[str] = Field(default_factory=list)
     ingredients: list[str]
     time_minutes: int
     url: str
@@ -25,6 +28,7 @@ class Recipe(BaseModel):
 class RecipeRecommendation(BaseModel):
     id: str
     name: str
+    cuisine: str | None = None
     ingredients: list[str]
     time_minutes: int
     url: str

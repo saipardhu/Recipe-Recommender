@@ -15,11 +15,18 @@ We can start this iteratively, but hte core components include
 2.2 a recipe is considered a useful match only if at least 60% of its required ingredients are available in the user's pantry.
 2.3 the recommendation response should always try to return 5 recipes.
 2.4 the 5 recommendations can be a mix of recipes from our own recipe book and web-discovered recipes, but every returned recipe must satisfy the 60% match rule.
-2.5 if our recipe book does not have enough useful matches to fill 5 recommendations, the app should search/scrape the web for the closest matching recipes.
+2.5 if our recipe book does not have enough useful matches to fill 5 recommendations, the app should search trusted recipe sources for the closest matching recipes.
 2.6 when we find a useful recipe from the web, we must store it in our recipe book so the same or similar future request can be served from our own data first.
 2.7 in the future, the recommendation count should be configurable from the user prompt or user preferences.
 2.8 for the MVP web discovery implementation, we can start with a public recipe API such as TheMealDB before expanding to broader website scraping.
 2.9 the recommender should normalize common ingredient variations, such as singular/plural names, and should not penalize users for missing basic pantry staples like salt, pepper, oil, and water.
+2.10 users can optionally select a cuisine type for recommendations.
+2.11 if the user selects a cuisine, that cuisine must be treated as a hard filter; all returned recipes must match that cuisine and still satisfy the 60% pantry match rule.
+2.12 a recipe should not be recommended if its core ingredient is missing, even when the rest of the supporting ingredients satisfy the 60% match rule.
+2.13 each recipe should include a core_ingredients list so the recommender can validate the ingredients that define the dish; inference from recipe titles should only be a fallback.
+2.14 if our local recipe book and TheMealDB cannot fill 5 useful matches, the backend should use curated cuisine-specific websites as fallbacks by reading structured recipe metadata from recipe pages.
+2.15 website discovery should be source-specific and controlled rather than an unrestricted crawl of the public internet.
+2.16 initial curated website sources include Indian Healthy Recipes for Indian recipes, Omnivore's Cookbook for Chinese recipes, Vincenzo's Plate for Italian recipes, and Mexican Please plus Simply Recipes for Mexican recipes.
 
 3. We can link them the desired recipes online if they are already present.
 

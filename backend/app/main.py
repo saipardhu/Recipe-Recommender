@@ -58,7 +58,7 @@ def create_ingredient(ingredient: IngredientCreate) -> dict[str, str]:
 def recommendations(request: RecommendationRequest) -> list[RecipeRecommendation]:
     # Recommendation logic stays server-side so future DB and web discovery work
     # can evolve without changing the browser contract.
-    return recommend_recipes(request.pantry)
+    return recommend_recipes(request.pantry, cuisine=request.cuisine)
 
 
 app.mount("/static", StaticFiles(directory=PROJECT_ROOT / "static"), name="static")

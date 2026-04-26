@@ -1,7 +1,13 @@
 from .discovery import discover_recipes
-from .ingredient_matcher import ingredient_matches, is_pantry_staple, normalize_ingredient
+from .ingredient_matcher import (
+    core_ingredients_available,
+    ingredient_matches,
+    is_pantry_staple,
+    normalize_ingredient,
+)
 from .models import PantryItem, Recipe, RecipeRecommendation
 from .recipe_store import load_recipes, save_new_recipes
+from .web_discovery import discover_web_recipes
 
 
 # MVP quality gate: do not recommend recipes when the pantry only covers a weak
@@ -13,8 +19,36 @@ def normalize(value: str) -> str:
     return normalize_ingredient(value)
 
 
-def score_recipe(recipe: Recipe, pantry: list[PantryItem]) -> RecipeRecommendation | None:
+def normalize_cuisine(value: str | None) -> str | None:
+    cuisine = (value or "").strip().lower()
+    return cuisine or None
+
+
+def recipe_matches_cuisine(recipe: Recipe, cuisine: str | None) -> bool:
+    normalized_cuisine = normalize_cuisine(cuisine)
+    if not normalized_cuisine:
+        return True
+
+    return normalize_cuisine(recipe.cuisine) == normalized_cuisine
+
+
+def score_recipe(
+    recipe: Recipe,
+    pantry: list[PantryItem],
+    cuisine: str | None = None,
+) -> RecipeRecommendation | None:
+    if not recipe_matches_cuisine(recipe, cuisine):
+        return None
+
     available = {normalize(item.name) for item in pantry}
+    if not core_ingredients_available(
+        recipe.name,
+        recipe.ingredients,
+        available,
+        recipe.core_ingredients,
+    ):
+        return None
+
     required = [
         normalize(ingredient)
         for ingredient in recipe.ingredients
@@ -36,6 +70,7 @@ def score_recipe(recipe: Recipe, pantry: list[PantryItem]) -> RecipeRecommendati
     return RecipeRecommendation(
         id=recipe.id,
         name=recipe.name,
+        cuisine=recipe.cuisine,
         ingredients=recipe.ingredients,
         time_minutes=recipe.time_minutes,
         url=recipe.url,
@@ -51,11 +86,15 @@ def rank_recommendations(recipes: list[RecipeRecommendation]) -> list[RecipeReco
     return sorted(recipes, key=lambda recipe: (-recipe.match_score, recipe.time_minutes, recipe.name))
 
 
-def recommend_recipes(pantry: list[PantryItem], limit: int = 5) -> list[RecipeRecommendation]:
+def recommend_recipes(
+    pantry: list[PantryItem],
+    limit: int = 5,
+    cuisine: str | None = None,
+) -> list[RecipeRecommendation]:
     local_recipes = load_recipes()
     recommendations = [
         recommendation
-        for recommendation in (score_recipe(recipe, pantry) for recipe in local_recipes)
+        for recommendation in (score_recipe(recipe, pantry, cuisine) for recipe in local_recipes)
         if recommendation
     ]
     recommendations = rank_recommendations(recommendations)
@@ -66,13 +105,32 @@ def recommend_recipes(pantry: list[PantryItem], limit: int = 5) -> list[RecipeRe
             min_match_score=MIN_MATCH_SCORE,
             existing_recipe_ids={recipe.id for recipe in local_recipes},
             limit=limit - len(recommendations),
+            cuisine=cuisine,
         )
         saved_recipes = save_new_recipes(discovered)
         discovered_recommendations = [
             recommendation
-            for recommendation in (score_recipe(recipe, pantry) for recipe in saved_recipes)
+            for recommendation in (score_recipe(recipe, pantry, cuisine) for recipe in saved_recipes)
             if recommendation
         ]
         recommendations = rank_recommendations(recommendations + discovered_recommendations)
+
+    if len(recommendations) < limit:
+        latest_recipe_ids = {recipe.id for recipe in local_recipes}
+        latest_recipe_ids.update(recommendation.id for recommendation in recommendations)
+        web_discovered = discover_web_recipes(
+            pantry=pantry,
+            min_match_score=MIN_MATCH_SCORE,
+            existing_recipe_ids=latest_recipe_ids,
+            limit=limit - len(recommendations),
+            cuisine=cuisine,
+        )
+        saved_recipes = save_new_recipes(web_discovered)
+        web_recommendations = [
+            recommendation
+            for recommendation in (score_recipe(recipe, pantry, cuisine) for recipe in saved_recipes)
+            if recommendation
+        ]
+        recommendations = rank_recommendations(recommendations + web_recommendations)
 
     return recommendations[:limit]

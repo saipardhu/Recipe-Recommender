@@ -5,6 +5,7 @@ const pantry = [];
 const form = document.querySelector("#ingredient-form");
 const ingredientInput = document.querySelector("#ingredient-input");
 const quantityInput = document.querySelector("#quantity-input");
+const cuisineSelect = document.querySelector("#cuisine-select");
 const suggestions = document.querySelector("#suggestions");
 const inventoryList = document.querySelector("#inventory-list");
 const emptyInventory = document.querySelector("#empty-inventory");
@@ -164,6 +165,7 @@ async function renderRecommendations() {
   }
 
   let rankedRecipes = [];
+  const cuisine = cuisineSelect.value;
   try {
     setRecommendationLoading(true);
     recipeList.innerHTML = "";
@@ -173,7 +175,7 @@ async function renderRecommendations() {
     // with quantities, units, preferences, and future user context.
     rankedRecipes = await fetchJson("/api/recommendations", {
       method: "POST",
-      body: JSON.stringify({ pantry })
+      body: JSON.stringify({ pantry, cuisine: cuisine || null })
     });
   } catch (error) {
     showRecipeMessage("Could not load recommendations. Is the backend running?");
@@ -203,6 +205,7 @@ async function renderRecommendations() {
       <h3>${recipe.name}</h3>
       <p class="recipe-meta">
         <span>${recipe.time_minutes} min</span>
+        ${recipe.cuisine ? `<span>${recipe.cuisine}</span>` : ""}
         <span>${Math.round(recipe.match_score * 100)}% pantry match</span>
         <span>${recipe.matched_ingredients.length}/${recipe.ingredients.length} ingredients</span>
       </p>
@@ -258,6 +261,7 @@ async function addIngredient(event) {
 form.addEventListener("submit", addIngredient);
 ingredientInput.addEventListener("input", renderSuggestions);
 finishButton.addEventListener("click", renderRecommendations);
+cuisineSelect.addEventListener("change", clearRecommendations);
 clearButton.addEventListener("click", () => {
   pantry.splice(0, pantry.length);
   renderInventory();

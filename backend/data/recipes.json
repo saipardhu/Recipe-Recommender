@@ -2,6 +2,10 @@
   {
     "id": "tomato-cheese-omelette",
     "name": "Tomato Cheese Omelette",
+    "cuisine": "British",
+    "core_ingredients": [
+      "egg"
+    ],
     "ingredients": [
       "egg",
       "tomato",
@@ -15,6 +19,10 @@
   {
     "id": "garlic-tomato-pasta",
     "name": "Garlic Tomato Pasta",
+    "cuisine": "Italian",
+    "core_ingredients": [
+      "pasta"
+    ],
     "ingredients": [
       "pasta",
       "tomato",
@@ -28,6 +36,10 @@
   {
     "id": "potato-cheese-toast",
     "name": "Potato Cheese Toast",
+    "cuisine": "Indian",
+    "core_ingredients": [
+      "potato"
+    ],
     "ingredients": [
       "potato",
       "cheese",
@@ -40,6 +52,10 @@
   {
     "id": "spinach-mushroom-rice",
     "name": "Spinach Mushroom Rice",
+    "cuisine": "British",
+    "core_ingredients": [
+      "rice"
+    ],
     "ingredients": [
       "rice",
       "spinach",
@@ -53,6 +69,10 @@
   {
     "id": "chicken-bell-pepper-stir-fry",
     "name": "Chicken Bell Pepper Stir Fry",
+    "cuisine": "Chinese",
+    "core_ingredients": [
+      "chicken"
+    ],
     "ingredients": [
       "chicken",
       "bell pepper",
@@ -66,6 +86,10 @@
   {
     "id": "carrot-potato-curry",
     "name": "Carrot Potato Curry",
+    "cuisine": "Indian",
+    "core_ingredients": [
+      "potato"
+    ],
     "ingredients": [
       "carrot",
       "potato",
@@ -79,6 +103,10 @@
   {
     "id": "bean-and-cheese-quesadilla",
     "name": "Bean and Cheese Quesadilla",
+    "cuisine": "Mexican",
+    "core_ingredients": [
+      "beans"
+    ],
     "ingredients": [
       "beans",
       "cheese",
@@ -90,8 +118,29 @@
     "url": "https://www.bbcgoodfood.com/recipes/refried-bean-quesadillas"
   },
   {
+    "id": "chana-masala",
+    "name": "Chana Masala",
+    "cuisine": "Indian",
+    "core_ingredients": [
+      "chickpea"
+    ],
+    "ingredients": [
+      "chickpea",
+      "onion",
+      "garlic",
+      "tomato puree",
+      "potato"
+    ],
+    "time_minutes": 30,
+    "url": "https://www.indianhealthyrecipes.com/chana-masala/"
+  },
+  {
     "id": "themealdb-52874",
     "name": "Beef and Mustard Pie",
+    "cuisine": "British",
+    "core_ingredients": [
+      "beef"
+    ],
     "ingredients": [
       "beef",
       "plain flour",
@@ -115,6 +164,10 @@
   {
     "id": "themealdb-53006",
     "name": "Moussaka",
+    "cuisine": "Greek",
+    "core_ingredients": [
+      "aubergine"
+    ],
     "ingredients": [
       "beef",
       "aubergine",
@@ -131,6 +184,10 @@
   {
     "id": "themealdb-53068",
     "name": "Beef Mechado",
+    "cuisine": "Filipino",
+    "core_ingredients": [
+      "beef"
+    ],
     "ingredients": [
       "garlic",
       "onion",
@@ -151,6 +208,10 @@
   {
     "id": "themealdb-53069",
     "name": "Bistek",
+    "cuisine": "Filipino",
+    "core_ingredients": [
+      "beef"
+    ],
     "ingredients": [
       "beef",
       "soy sauce",
@@ -167,6 +228,10 @@
   {
     "id": "themealdb-53141",
     "name": "Carbonada Criolla",
+    "cuisine": "Argentinian",
+    "core_ingredients": [
+      "beef"
+    ],
     "ingredients": [
       "beef",
       "onion",
@@ -180,5 +245,189 @@
     ],
     "time_minutes": 45,
     "url": "https://www.munchery.com/blog/the-ten-iconic-dishes-of-argentina-and-how-to-cook-them-at-home/"
+  },
+  {
+    "id": "themealdb-52807",
+    "name": "Baingan Bharta",
+    "cuisine": "Indian",
+    "core_ingredients": [
+      "aubergine"
+    ],
+    "ingredients": [
+      "aubergine",
+      "onion",
+      "tomato",
+      "garlic",
+      "green chilli",
+      "red chilli powder",
+      "oil",
+      "coriander leave",
+      "salt"
+    ],
+    "time_minutes": 45,
+    "url": "http://www.vegrecipesofindia.com/baingan-bharta-recipe-punjabi-baingan-bharta-recipe/"
+  },
+  {
+    "id": "themealdb-52795",
+    "name": "Chicken Handi",
+    "cuisine": "Indian",
+    "core_ingredients": [
+      "chicken"
+    ],
+    "ingredients": [
+      "chicken",
+      "onion",
+      "tomato",
+      "garlic",
+      "ginger paste",
+      "vegetable oil",
+      "cumin seed",
+      "coriander seed",
+      "turmeric powder",
+      "chilli powder",
+      "green chilli",
+      "yogurt",
+      "cream",
+      "fenugreek",
+      "garam masala",
+      "salt"
+    ],
+    "time_minutes": 45,
+    "url": "https://www.themealdb.com/meal/52795"
+  },
+  {
+    "id": "themealdb-53358",
+    "name": "Chicken Mandi",
+    "cuisine": "Indian",
+    "core_ingredients": [
+      "chicken"
+    ],
+    "ingredients": [
+      "chicken",
+      "basmati rice",
+      "water",
+      "onion",
+      "garlic",
+      "green chilli",
+      "salt",
+      "oil",
+      "turmeric powder",
+      "coriander",
+      "cardamom",
+      "clove",
+      "cinnamon",
+      "pepper",
+      "bay leaf"
+    ],
+    "time_minutes": 45,
+    "url": "https://www.themealdb.com/meal/53358"
+  },
+  {
+    "id": "themealdb-52868",
+    "name": "Kidney Bean Curry",
+    "cuisine": "Indian",
+    "core_ingredients": [
+      "kidney bean"
+    ],
+    "ingredients": [
+      "vegetable oil",
+      "onion",
+      "garlic",
+      "ginger",
+      "coriander",
+      "cumin",
+      "paprika",
+      "garam masala",
+      "chopped tomato",
+      "kidney bean",
+      "basmati rice"
+    ],
+    "time_minutes": 45,
+    "url": "https://www.bbcgoodfood.com/recipes/kidney-bean-curry"
+  },
+  {
+    "id": "themealdb-53158",
+    "name": "Air fryer patatas bravas",
+    "cuisine": "Spanish",
+    "core_ingredients": [
+      "potato"
+    ],
+    "ingredients": [
+      "potato",
+      "olive oil",
+      "onion",
+      "garlic",
+      "paprika",
+      "tomato puree",
+      "tinned tomato",
+      "basil leave"
+    ],
+    "time_minutes": 45,
+    "url": "https://www.bbcgoodfood.com/recipes/air-fryer-patatas-bravas"
+  },
+  {
+    "id": "indianhealthyrecipes-potato-curry-aloo-sabzi",
+    "name": "Potato Curry Recipe (Aloo Curry)",
+    "cuisine": "Indian",
+    "core_ingredients": [
+      "potato"
+    ],
+    "ingredients": [
+      "potato",
+      "onion",
+      "tomato",
+      "ginger",
+      "garlic",
+      "green chilli",
+      "curry leave",
+      "coriander",
+      "oil",
+      "water",
+      "salt",
+      "garam masala",
+      "kashmiri red chili powder",
+      "turmeric",
+      "mustard seed",
+      "cumin",
+      "coriander powder",
+      "cumin powder"
+    ],
+    "time_minutes": 40,
+    "url": "https://www.indianhealthyrecipes.com/potato-curry-aloo-sabzi/"
+  },
+  {
+    "id": "indianhealthyrecipes-chana-dal-recipe",
+    "name": "Chana Dal Recipe (Bengal Gram Dal)",
+    "cuisine": "Indian",
+    "core_ingredients": [
+      "chickpea"
+    ],
+    "ingredients": [
+      "chickpea",
+      "water",
+      "turmeric",
+      "oil",
+      "onion",
+      "ginger",
+      "garlic",
+      "tomato",
+      "bay leaf",
+      "cinnamon",
+      "cardamom",
+      "sea salt",
+      "kashmiri red chili powder",
+      "garam masala",
+      "coriander powder",
+      "cumin powder",
+      "dried fenugreek",
+      "amchur",
+      "coriander",
+      "cumin",
+      "green chili",
+      "asafoetida",
+      "chili powder"
+    ],
+    "time_minutes": 45,
+    "url": "https://www.indianhealthyrecipes.com/chana-dal-recipe/"
   }
 ]

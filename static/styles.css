@@ -25,7 +25,8 @@ body {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -90,7 +91,8 @@ label {
   font-weight: 700;
 }
 
-input {
+input,
+select {
   width: 100%;
   min-height: 46px;
   border: 1px solid var(--line);
@@ -101,6 +103,11 @@ input {
 }
 
 input:focus {
+  outline: 3px solid rgba(47, 125, 87, 0.18);
+  border-color: var(--accent);
+}
+
+select:focus {
   outline: 3px solid rgba(47, 125, 87, 0.18);
   border-color: var(--accent);
 }
