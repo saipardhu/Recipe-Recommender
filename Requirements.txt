@@ -67,6 +67,9 @@ We can start this iteratively, but hte core components include
 3. [x] Interaction polish
   3.1 [x] improve empty states, loading states, buttons, form controls, and recommendation cards so the app feels intentionally designed.
   3.2 [x] keep the current pantry-to-recommendation workflow clear and usable while improving the visual design.
+  3.3 [x] align the top header, subtitle placement, and top-right decorative food art more closely with the recipe-magazine reference.
+  3.4 [x] restore visible form labels and add clearer quantity examples such as 1, 1 cup, and 100g.
+  3.5 [x] remove unwanted abbreviation chips from recommendation cards and tune card colors toward the reference palette.
 
 *** Future Scope
 1. [ ] User recipe and pantry management
